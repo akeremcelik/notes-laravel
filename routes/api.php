@@ -24,6 +24,7 @@ Route::prefix('v1')->group(function () {
     Route::post('register', [UserAuthController::class, 'register']);
     Route::post('login', [UserAuthController::class, 'login']);
     Route::middleware('auth:api')->group(function() {
+        Route::post('logout', [UserAuthController::class, 'logout']);
         Route::get('user', [UserController::class, 'user']);
     });
 });
