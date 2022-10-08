@@ -38,4 +38,13 @@ class UserAuthController extends Controller
             throw $exception;
         }
     }
+
+    public function logout()
+    {
+        try {
+            auth()->user()->token()->revoke();
+        } catch (\Throwable $exception) {
+            throw $exception;
+        }
+    }
 }
