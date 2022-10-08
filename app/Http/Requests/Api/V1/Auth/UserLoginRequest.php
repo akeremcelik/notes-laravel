@@ -25,7 +25,7 @@ class UserLoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'email', Rule::exists('users', 'email'), 'min:5', 'max:35'],
+            'email' => ['required', 'email', 'min:5', 'max:35'],
             'password' => ['required', 'min:3', 'max:35']
         ];
     }
