@@ -16,7 +16,7 @@ class UserAuthController extends Controller
         try {
             $data = $request->validated();
             $data['password'] = Hash::make($data['password']);
-            $user = (new UserService())->create($data);
+            $user = (new UserService())->store($data);
 
             return UserResource::make($user);
         } catch (\Throwable $exception) {
