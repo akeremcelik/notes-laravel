@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\NoteController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\Auth\UserAuthController;
 use Illuminate\Http\Request;
@@ -26,5 +27,6 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:api')->group(function() {
         Route::post('logout', [UserAuthController::class, 'logout']);
         Route::get('user', [UserController::class, 'user']);
+        Route::apiResource('notes', NoteController::class);
     });
 });
