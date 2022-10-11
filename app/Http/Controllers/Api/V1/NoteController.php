@@ -13,6 +13,11 @@ use Illuminate\Http\Response;
 
 class NoteController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('check.note.belongsTo.user')->only('show', 'update', 'destroy');
+    }
+
     /**
      * @return AnonymousResourceCollection
      */
