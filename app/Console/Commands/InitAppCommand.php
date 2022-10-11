@@ -19,7 +19,7 @@ class InitAppCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Init App';
+    protected $description = 'Init App Command';
 
     /**
      * Execute the console command.

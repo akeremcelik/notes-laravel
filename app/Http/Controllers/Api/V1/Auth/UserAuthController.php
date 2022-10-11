@@ -8,13 +8,20 @@ use App\Http\Requests\Api\V1\Auth\UserRefreshTokenRequest;
 use App\Http\Requests\Api\V1\Auth\UserRegisterRequest;
 use App\Http\Resources\Api\V1\UserResource;
 use App\Services\UserService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserAuthController extends Controller
 {
-    public function register(UserRegisterRequest $request)
+    /**
+     * @param UserRegisterRequest $request
+     * @return UserResource
+     * @throws \Throwable
+     */
+    public function register(UserRegisterRequest $request): UserResource
     {
         try {
             $data = $request->validated();
@@ -27,7 +34,12 @@ class UserAuthController extends Controller
         }
     }
 
-    public function login(UserLoginRequest $request)
+    /**
+     * @param UserLoginRequest $request
+     * @return JsonResponse|Response
+     * @throws \Throwable
+     */
+    public function login(UserLoginRequest $request): JsonResponse|Response
     {
         try {
             $data = $request->validated();
@@ -50,7 +62,12 @@ class UserAuthController extends Controller
         }
     }
 
-    public function refreshToken(UserRefreshTokenRequest $request)
+    /**
+     * @param UserRefreshTokenRequest $request
+     * @return Response
+     * @throws \Throwable
+     */
+    public function refreshToken(UserRefreshTokenRequest $request): Response
     {
         try {
             $data = $request->validated();
@@ -69,7 +86,11 @@ class UserAuthController extends Controller
         }
     }
 
-    public function logout()
+    /**
+     * @return void
+     * @throws \Throwable
+     */
+    public function logout(): void
     {
         try {
             auth()->user()->token()->revoke();
