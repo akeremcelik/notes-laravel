@@ -10,6 +10,7 @@ use App\Models\Note;
 use App\Services\NoteService;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class NoteController extends Controller
 {
@@ -34,11 +35,14 @@ class NoteController extends Controller
     public function store(StoreNoteRequest $request): Response
     {
         try {
+            DB::beginTransaction();
             $data = $request->validated();
             (new NoteService())->store($data);
+            DB::commit();
 
             return response()->noContent()->setStatusCode(201);
         } catch (\Throwable $exception) {
+            DB::rollBack();
             throw $exception;
         }
     }
@@ -61,11 +65,14 @@ class NoteController extends Controller
     public function update(UpdateNoteRequest $request, Note $note): Response
     {
         try {
+            DB::beginTransaction();
             $data = $request->validated();
             (new NoteService())->update($note, $data);
+            DB::commit();
 
             return response()->noContent();
         } catch (\Throwable $exception) {
+            DB::rollBack();
             throw $exception;
         }
     }
@@ -78,10 +85,13 @@ class NoteController extends Controller
     public function destroy(Note $note): Response
     {
         try {
+            DB::beginTransaction();
             (new NoteService())->destroy($note);
+            DB::commit();
 
             return response()->noContent();
         } catch (\Throwable $exception) {
+            DB::rollBack();
             throw $exception;
         }
     }

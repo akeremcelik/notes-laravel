@@ -24,12 +24,15 @@ class UserAuthController extends Controller
     public function register(UserRegisterRequest $request): UserResource
     {
         try {
+            DB::beginTransaction();
             $data = $request->validated();
             $data['password'] = Hash::make($data['password']);
             $user = (new UserService())->store($data);
+            DB::commit();
 
             return UserResource::make($user);
         } catch (\Throwable $exception) {
+            DB::rollBack();
             throw $exception;
         }
     }
