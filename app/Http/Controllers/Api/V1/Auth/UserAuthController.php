@@ -47,7 +47,7 @@ class UserAuthController extends Controller
         try {
             $data = $request->validated();
             if (!auth()->attempt($data))
-                return response()->json('Email or password is wrong', 401);
+                return response()->json(['message' => 'Email or password is wrong'], 401);
 
             $client = DB::table('oauth_clients')->where('provider', 'users')->first();
             $request = Request::create('/oauth/token', 'POST',[
