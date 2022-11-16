@@ -29,18 +29,18 @@ class NoteController extends Controller
 
     /**
      * @param StoreNoteRequest $request
-     * @return Response
+     * @return NoteResource
      * @throws \Throwable
      */
-    public function store(StoreNoteRequest $request): Response
+    public function store(StoreNoteRequest $request): NoteResource
     {
         try {
             DB::beginTransaction();
             $data = $request->validated();
-            (new NoteService())->store($data);
+            $note = (new NoteService())->store($data);
             DB::commit();
 
-            return response()->noContent()->setStatusCode(201);
+            return NoteResource::make($note);
         } catch (\Throwable $exception) {
             DB::rollBack();
             throw $exception;
